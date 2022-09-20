@@ -1,0 +1,33 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import home from '@/pages/home'
+Vue.use(VueRouter)
+
+let router = new VueRouter({
+    routes: [
+        {
+            path: '/home',
+            name: 'home',
+            component: () => import("@/pages/home")
+        },
+
+        {   //默认路由(路由重定向)
+            path: '/',
+            redirect: '/home'
+        }
+    ],
+    //滚动行为，配置路由跳转之后滚动条的位置
+    scrollBehavior(to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
+})
+
+//重复触发了同一个路由。
+//这个错误是 vur - router更新以后新出现的错误,以下代码可抛出该错误
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+
+
+export default router
