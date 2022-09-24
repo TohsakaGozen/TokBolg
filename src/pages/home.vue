@@ -45,21 +45,74 @@
           <a href="https://github.com/TohsakaGozen?tab=repositories">github</a>
         </p>
       </div>
-      <div class="imageShow"></div>
-      <div class="nearArticles"></div>
       <div class="musicShow">
         <audio
-          controls
-          src="https://music.163.com/song/media/outer/url?id=1958017000.mp3 "
+          ref="audio"
+          autoplay
+          :src="audioUrl"
+          @ended="nextMusic()"
         ></audio>
+        <h5
+          :class="{ activeAudio: musicID == music.id }"
+          v-for="(music, index) in this.homeMusicList"
+          :key="index"
+          @click="playMusic(music)"
+        >
+          {{ music.name }}
+          <img v-if="musicID != music.id" src="../assets/play.png" alt="" />
+          <img v-if="musicID == music.id" src="../assets/pause.png" alt="" />
+        </h5>
       </div>
+      <div class="imageShow"></div>
+      <div class="nearArticles"></div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "home",
+  data() {
+    return {
+      musicID: 3, //需要进行播放的音乐id
+      isPlay: 0,
+    };
+  },
+  watch: {
+    $refs(o, n) {
+      console.log(o, n);
+    },
+  },
+  computed: {
+    ...mapState("music", ["homeMusicList", "audioUrl"]),
+  },
+  methods: {
+    async nextMusic() {
+      let newmusicID = await this.$store.dispatch(
+        "music/reqNextAdudio",
+        this.musicID
+      );
+      this.musicID = newmusicID;
+      this.$refs.audio.play();
+    },
+    playMusic(music) {
+      if (music.id == this.musicID) {
+        this.isPlay = 0;
+        this.musicID = -1;
+        this.$refs.audio.pause();
+      } else {
+        this.$refs.audio.play();
+        this.isPlay = 1;
+        this.musicID = music.id;
+        this.$store.dispatch("music/reqAdudio", this.musicID);
+      }
+    },
+  },
+  created() {
+    this.$store.dispatch("music/reqAdudio", this.musicID);
+    this.$store.dispatch("music/reqHomeMusicList");
+  },
 };
 </script>
 
@@ -148,6 +201,40 @@ export default {
 .userInfo img {
   width: 30%;
   border-radius: 100%;
+}
+.musicShow {
+  padding: 1rem;
+  display: flex;
+  padding-left: 5rem;
+  height: 40rem;
+  justify-content: right;
+  overflow: auto;
+}
+.musicShow img {
+  width: 9%;
+}
+.musicShow h5 {
+  position: relative;
+  width: 90%;
+  height: 4rem;
+  display: flex;
+  padding: 0.5rem;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: 100;
+  font-family: YOUYUAN;
+  transition: all 0.3s;
+  cursor: pointer;
+  align-items: center;
+  border-radius: 1rem;
+}
+.musicShow h5:hover {
+  background-color: aquamarine;
+  scale: 1.05;
+}
+.musicShow .activeAudio {
+  background-color: aquamarine;
+  width: 100%;
 }
 a {
   color: black;
