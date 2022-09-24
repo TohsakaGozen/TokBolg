@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from '@/pages/home'
 Vue.use(VueRouter)
 
 let router = new VueRouter({

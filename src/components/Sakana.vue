@@ -23,8 +23,8 @@ export default {
 <style scoped>
 .sakana {
   position: fixed;
-  width: 100%;
   left: -30px;
   bottom: -25px;
+  z-index: 0;
 }
 </style>

@@ -39,15 +39,20 @@
     <div class="homeRight">
       <div class="userInfo">
         <img src="../../public/images/user.jpg" alt="" />
-        <p>id: TohsakaGozen</p>
-        <p>企鹅: 1679124358</p>
+        <p><strong>id</strong> : TohsakaGozen</p>
+        <p><strong>qq</strong> : 1679124358</p>
         <p>
           <a href="https://github.com/TohsakaGozen?tab=repositories">github</a>
         </p>
       </div>
       <div class="imageShow"></div>
       <div class="nearArticles"></div>
-      <div class="musicShow"></div>
+      <div class="musicShow">
+        <audio
+          controls
+          src="https://music.163.com/song/media/outer/url?id=1958017000.mp3 "
+        ></audio>
+      </div>
     </div>
   </div>
 </template>
@@ -64,7 +69,7 @@ export default {
   margin-right: auto;
   margin-top: 2rem;
   background-color: rgb(255, 255, 255);
-  width: 85%;
+  width: 90%;
   min-height: 90rem;
   display: flex;
   justify-content: space-around;
@@ -88,15 +93,15 @@ export default {
   justify-content: space-between;
 }
 .homeLeft .pageList {
-  padding: 1rem;
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: center;
 }
 .homeLeft .pageList .article {
   margin: 2rem;
   background-color: rgb(252, 243, 234);
-  width: 95%;
+  width: 90%;
   cursor: pointer;
   box-shadow: 0 0 10px rgb(139, 139, 139);
   border-radius: 0.3rem;
@@ -124,19 +129,28 @@ export default {
   min-height: 20rem;
   background-color: antiquewhite;
   margin: 2rem;
+  margin-right: 0;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.userInfo {
   align-items: center;
 }
 .userInfo p {
-  text-align: left;
+  min-width: 14rem;
+  border-bottom: 1px solid;
   font-size: 1.5rem;
   padding: 0.5rem;
+  font-family: YOUYUAN;
 }
 .userInfo img {
   width: 30%;
   border-radius: 100%;
+}
+a {
+  color: black;
+  text-decoration: none;
 }
 </style>

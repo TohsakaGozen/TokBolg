@@ -2,13 +2,13 @@
   <div class="headerBox">
     <div class="headerLeft">TOKBLOG</div>
     <div class="headerRight">
-      <li>首页</li>
-      <li>笔记</li>
-      <li>音乐</li>
-      <li>相册</li>
-      <li>个人</li>
-      <li>留言板</li>
-      <li>GitHub</li>
+      <li><img src="@/assets/home.png" alt="" />首页</li>
+      <li><img src="@/assets/note.png" alt="" />笔记</li>
+      <li><img src="@/assets/music.png" alt="" />音乐</li>
+      <li><img src="@/assets/photo.png" alt="" />相册</li>
+      <li><img src="@/assets/person.png" alt="" />个人</li>
+      <li><img src="@/assets/message.png" alt="" />留言板</li>
+      <li><img src="@/assets/github.png" alt="" />GitHub</li>
       <div class="lr">
         <li>登录</li>
         <p>|</p>
@@ -17,7 +17,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: "Header",
@@ -49,8 +48,14 @@ export default {
 .headerBox .headerRight li {
   cursor: pointer;
   border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.8rem;
   transition: 0.2s;
+}
+.headerBox .headerRight img {
+  width: 2.1rem;
 }
 .lr p {
   font-size: 2rem;
@@ -59,6 +64,10 @@ export default {
 .lr {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+.headerBox .headerRight .lr li {
+  padding: 0.2rem;
 }
 .headerBox .headerRight li:hover {
   scale: 1.1;
