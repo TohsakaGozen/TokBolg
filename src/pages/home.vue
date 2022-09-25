@@ -37,34 +37,33 @@
       </div>
     </div>
     <div class="homeRight">
-      <div class="userInfo">
+      <section class="userInfo">
         <img src="../../public/images/user.jpg" alt="" />
         <p><strong>id</strong> : TohsakaGozen</p>
         <p><strong>qq</strong> : 1679124358</p>
         <p>
           <a href="https://github.com/TohsakaGozen?tab=repositories">github</a>
         </p>
-      </div>
-      <div class="musicShow">
-        <audio
-          ref="audio"
-          autoplay
-          :src="audioUrl"
-          @ended="nextMusic()"
-        ></audio>
-        <h5
-          :class="{ activeAudio: musicID == music.id }"
-          v-for="(music, index) in this.homeMusicList"
-          :key="index"
-          @click="playMusic(music)"
-        >
-          {{ music.name }}
-          <img v-if="musicID != music.id" src="../assets/play.png" alt="" />
-          <img v-if="musicID == music.id" src="../assets/pause.png" alt="" />
-        </h5>
-      </div>
-      <div class="imageShow"></div>
-      <div class="nearArticles"></div>
+      </section>
+      <section class="musicShow">
+        <h3 class="sectionTitle">MYMUSIC</h3>
+        <audio ref="audio" :src="audioUrl" @ended="nextMusic()"></audio>
+        <div class="musicList">
+          <h5
+            :class="{ activeAudio: musicID == music.id }"
+            v-for="(music, index) in this.homeMusicList"
+            :key="index"
+            @click="playMusic(music)"
+          >
+            {{ music.name }}
+            <img v-if="musicID != music.id" src="../assets/play.png" alt="" />
+            <img v-if="musicID == music.id" src="../assets/pause.png" alt="" />
+          </h5>
+        </div>
+      </section>
+
+      <section class="imageShow"></section>
+      <section class="nearArticles"></section>
     </div>
   </div>
 </template>
@@ -75,7 +74,7 @@ export default {
   name: "home",
   data() {
     return {
-      musicID: 3, //需要进行播放的音乐id
+      musicID: 0, //需要进行播放的音乐id
       isPlay: 0,
     };
   },
@@ -96,16 +95,20 @@ export default {
       this.musicID = newmusicID;
       this.$refs.audio.play();
     },
-    playMusic(music) {
+    async playMusic(music) {
       if (music.id == this.musicID) {
         this.isPlay = 0;
         this.musicID = -1;
         this.$refs.audio.pause();
       } else {
-        this.$refs.audio.play();
-        this.isPlay = 1;
-        this.musicID = music.id;
-        this.$store.dispatch("music/reqAdudio", this.musicID);
+        try {
+          await this.$store.dispatch("music/reqAdudio", music.id);
+          this.$refs.audio.play();
+          this.isPlay = 1;
+          this.musicID = music.id;
+        } catch (error) {
+          alert(error);
+        }
       }
     },
   },
@@ -178,7 +181,7 @@ export default {
 .homeRight {
   flex: 1;
 }
-.homeRight div {
+.homeRight section {
   min-height: 20rem;
   background-color: antiquewhite;
   margin: 2rem;
@@ -202,39 +205,77 @@ export default {
   width: 30%;
   border-radius: 100%;
 }
-.musicShow {
-  padding: 1rem;
+.musicInfo {
   display: flex;
-  padding-left: 5rem;
-  height: 40rem;
-  justify-content: right;
-  overflow: auto;
+  flex-direction: column;
+}
+.sectionTitle {
+  position: absolute;
+  color: rgb(251, 93, 93);
+  top: 0.5rem;
+  font-size: 2.8rem;
+  text-align: center;
+  font-family: YOUYUAN;
+}
+.musicShow {
+  position: relative;
+  height: 50rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .musicShow img {
   width: 9%;
 }
+.musicList {
+  position: absolute;
+  width: 90%;
+  height: 93%;
+  bottom: 0;
+  left: 3rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.musicList::-webkit-scrollbar-thumb {
+  background-color: rgb(253, 138, 130);
+}
+.musicList::-webkit-scrollbar {
+  width: 1rem;
+  background-color: rgb(221, 221, 221);
+}
 .musicShow h5 {
+  /* top: 700rem; */
   position: relative;
   width: 90%;
-  height: 4rem;
+  min-height: 4rem;
   display: flex;
-  padding: 0.5rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
   justify-content: space-between;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  padding-left: 3rem;
   font-weight: 100;
   font-family: YOUYUAN;
-  transition: all 0.3s;
+  transition: all 0.2s;
+  border-bottom: 1px solid rgb(255, 55, 55);
   cursor: pointer;
   align-items: center;
-  border-radius: 1rem;
+  /* overflow: hidden; */
 }
 .musicShow h5:hover {
-  background-color: aquamarine;
+  background-color: rgb(255, 69, 69);
   scale: 1.05;
 }
 .musicShow .activeAudio {
-  background-color: aquamarine;
-  width: 100%;
+  background-color: rgb(255, 127, 127);
+  top: 0;
+  width: 95%;
+  font-size: 1.6rem;
+  border: 0;
+  border-radius: 1rem;
+  padding: 2rem;
 }
 a {
   color: black;

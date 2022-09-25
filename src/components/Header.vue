@@ -4,7 +4,7 @@
     <div class="headerRight">
       <li><img src="@/assets/home.png" alt="" />首页</li>
       <li><img src="@/assets/note.png" alt="" />笔记</li>
-      <li><img src="@/assets/music.png" alt="" />音乐</li>
+      <li><img src="@/assets/demo.png" alt="" />DEMO</li>
       <li><img src="@/assets/photo.png" alt="" />相册</li>
       <li><img src="@/assets/person.png" alt="" />个人</li>
       <li><img src="@/assets/message.png" alt="" />留言板</li>
