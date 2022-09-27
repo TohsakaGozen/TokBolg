@@ -2,13 +2,19 @@
   <div class="headerBox">
     <div class="headerLeft">TOKBLOG</div>
     <div class="headerRight">
-      <li><img src="@/assets/home.png" alt="" />首页</li>
+      <li @click="$router.push({ name: 'home' })">
+        <img src="@/assets/home.png" alt="" />首页
+      </li>
       <li><img src="@/assets/note.png" alt="" />笔记</li>
       <li><img src="@/assets/demo.png" alt="" />DEMO</li>
-      <li><img src="@/assets/photo.png" alt="" />相册</li>
+      <li @click="$router.push({ name: 'photoAlbum' })">
+        <img src="@/assets/photo.png" alt="" />相册
+      </li>
       <li><img src="@/assets/person.png" alt="" />个人</li>
       <li><img src="@/assets/message.png" alt="" />留言板</li>
-      <li><img src="@/assets/github.png" alt="" />GitHub</li>
+      <a href="https://github.com/TohsakaGozen?tab=repositories">
+        <li><img src="@/assets/github.png" alt="" />GitHub</li></a
+      >
       <div class="lr">
         <li>登录</li>
         <p>|</p>
@@ -80,5 +86,9 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 2rem;
+}
+a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
 }
 </style>

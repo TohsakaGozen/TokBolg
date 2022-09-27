@@ -47,7 +47,10 @@
       </section>
       <section class="musicShow">
         <h3 class="sectionTitle">MYMUSIC</h3>
-        <audio ref="audio" :src="audioUrl" @ended="nextMusic()"></audio>
+        <!-- <audio ref="audio" :src="audioUrl" @ended="nextMusic()"></audio> -->
+        <div v-if="this.homeMusicList.length == 0" class="loading">
+          <img src="@/assets/loading.gif" alt="" />
+        </div>
         <div class="musicList">
           <h5
             :class="{ activeAudio: musicID == music.id }"
@@ -61,14 +64,18 @@
           </h5>
         </div>
       </section>
-
-      <section class="imageShow"></section>
-      <section class="nearArticles"></section>
+      <section class="imageShow">
+        <carousel />
+      </section>
+      <section class="nearArticles">
+        <h3 class="sectionTitle">NEARARTICLES</h3>
+      </section>
     </div>
   </div>
 </template>
 
 <script>
+import carousel from "@/components/Carousel.vue";
 import { mapState } from "vuex";
 export default {
   name: "home",
@@ -78,10 +85,8 @@ export default {
       isPlay: 0,
     };
   },
-  watch: {
-    $refs(o, n) {
-      console.log(o, n);
-    },
+  components: {
+    carousel,
   },
   computed: {
     ...mapState("music", ["homeMusicList", "audioUrl"]),
@@ -93,17 +98,17 @@ export default {
         this.musicID
       );
       this.musicID = newmusicID;
-      this.$refs.audio.play();
+      this.$parent.$refs.audio.play();
     },
     async playMusic(music) {
       if (music.id == this.musicID) {
         this.isPlay = 0;
         this.musicID = -1;
-        this.$refs.audio.pause();
+        this.$parent.$refs.audio.pause();
       } else {
         try {
           await this.$store.dispatch("music/reqAdudio", music.id);
-          this.$refs.audio.play();
+          this.$parent.$refs.audio.play();
           this.isPlay = 1;
           this.musicID = music.id;
         } catch (error) {
@@ -113,8 +118,12 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("music/reqAdudio", this.musicID);
-    this.$store.dispatch("music/reqHomeMusicList");
+    try {
+      console.log(this.$parent.$refs);
+      this.$store.dispatch("music/reqHomeMusicList");
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
@@ -232,8 +241,8 @@ export default {
 .musicList {
   position: absolute;
   width: 90%;
-  height: 93%;
-  bottom: 0;
+  height: 92.7%;
+  bottom: 0.5rem;
   left: 3rem;
   overflow-x: hidden;
   overflow-y: auto;
@@ -276,6 +285,30 @@ export default {
   border: 0;
   border-radius: 1rem;
   padding: 2rem;
+}
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(218, 194, 170);
+}
+.loading img {
+  width: 50%;
+}
+.imageShow {
+  padding: 0.5rem;
+  height: 45rem;
+}
+.nearArticles {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nearArticles .sectionTitle {
+  color: orange;
 }
 a {
   color: black;

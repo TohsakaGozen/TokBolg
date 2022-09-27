@@ -1,9 +1,12 @@
 <template>
   <div class="app">
     <Header />
+    <audio ref="audio" :src="audioUrl" @ended="nextMusic()"></audio>
     <Sakana />
     <topImage />
-    <router-view></router-view>
+    <keep-alive>
+      <router-view class="routerContent"></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -11,6 +14,7 @@
 import Header from "@/components/Header";
 import Sakana from "@/components/Sakana";
 import topImage from "@/components/TopImage.vue";
+import { mapState } from "vuex";
 export default {
   name: "App",
   components: {
@@ -18,6 +22,20 @@ export default {
     Sakana,
     topImage,
   },
+  methods: {
+    async nextMusic() {
+      let newmusicID = await this.$store.dispatch(
+        "music/reqNextAdudio",
+        this.musicID
+      );
+      this.musicID = newmusicID;
+      this.$refs.audio.play();
+    },
+  },
+  computed: {
+    ...mapState("music", ["audioUrl"]),
+  },
+  mounted() {},
 };
 </script>
 
@@ -30,5 +48,8 @@ export default {
 html {
   /* font-size: 12px; */
   font-size: 10px;
+}
+.routerContent {
+  width: 100vw;
 }
 </style>

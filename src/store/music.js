@@ -48,11 +48,7 @@ const actions = {
 const mutations = {
     SETHOMEMUSICLIST(state, musicParamsList) {
 
-
         state.homeMusicList = musicParamsList
-
-
-        console.log(state.homeMusicList)
 
     },
     GETAUDIOURL(state, audioUrl) {

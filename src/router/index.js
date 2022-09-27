@@ -9,6 +9,11 @@ let router = new VueRouter({
             name: 'home',
             component: () => import("@/pages/home")
         },
+        {
+            path: '/photoAlbum',
+            name: 'photoAlbum',
+            component: () => import("@/pages/photoAlbum")
+        },
 
         {   //默认路由(路由重定向)
             path: '/',
