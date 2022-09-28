@@ -4,8 +4,8 @@ module.exports = defineConfig({
   lintOnSave: false,
   devServer: {
     proxy: {
-      '/testseadad': {
-        target: "http://gmall-h5-api.atguigu.cn",//要跨域的目的ip
+      '/api': {
+        target: "http://47.108.218.252:3000",//要跨域的目的ip
         // pathRewrite: { '^/api': '' }
       }
     },

@@ -3,7 +3,8 @@ import { reqMusic } from "@/api/index"
 const state = {
     myMusicList: [],
     homeMusicList: [],
-    audioUrl: ''
+    audioUrl: '',
+    appMusicID: 0,  //正在进行播放的音乐id
 }
 
 const actions = {
@@ -26,7 +27,9 @@ const actions = {
                 newMusicID = state.homeMusicList[++index].id
             }
         }
+        console.log(musicID)
         let result = await reqMusic(newMusicID)
+
         let audioUrl = result.data[0].url
         if (audioUrl == null) {
             for (let index in state.homeMusicList) {

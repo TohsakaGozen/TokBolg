@@ -7,12 +7,38 @@ let router = new VueRouter({
         {
             path: '/home',
             name: 'home',
+            meta: ["TOHSAKAGOZEN"],
             component: () => import("@/pages/home")
         },
         {
             path: '/photoAlbum',
             name: 'photoAlbum',
+            meta: ["PHOTOALBUM"],
             component: () => import("@/pages/photoAlbum")
+        },
+        {
+            path: '/record',
+            name: 'record',
+            meta: ["RECORD"],
+            component: () => import("@/pages/record")
+        },
+        {
+            path: '/projects',
+            name: 'projects',
+            meta: ["DEMO"],
+            component: () => import("@/pages/projects")
+        },
+        {
+            path: '/person',
+            name: 'person',
+            meta: ["ME"],
+            component: () => import("@/pages/person")
+        },
+        {
+            path: '/article',
+            name: 'article',
+            meta: ["ARTICLE"],
+            component: () => import("@/pages/article")
         },
 
         {   //默认路由(路由重定向)

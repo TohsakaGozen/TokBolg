@@ -53,23 +53,31 @@
         </div>
         <div class="musicList">
           <h5
-            :class="{ activeAudio: musicID == music.id }"
+            :class="{ activeAudio: $store.state.music.appMusicID == music.id }"
             v-for="(music, index) in this.homeMusicList"
             :key="index"
             @click="playMusic(music)"
           >
             {{ music.name }}
-            <img v-if="musicID != music.id" src="../assets/play.png" alt="" />
-            <img v-if="musicID == music.id" src="../assets/pause.png" alt="" />
+            <img
+              v-if="$store.state.music.appMusicID != music.id"
+              src="../assets/play.png"
+              alt=""
+            />
+            <img
+              v-if="$store.state.music.appMusicID == music.id"
+              src="../assets/pause.png"
+              alt=""
+            />
           </h5>
         </div>
       </section>
       <section class="imageShow">
         <carousel />
       </section>
-      <section class="nearArticles">
+      <!-- <section class="nearArticles">
         <h3 class="sectionTitle">NEARARTICLES</h3>
-      </section>
+      </section> -->
     </div>
   </div>
 </template>
@@ -81,7 +89,6 @@ export default {
   name: "home",
   data() {
     return {
-      musicID: 0, //需要进行播放的音乐id
       isPlay: 0,
     };
   },
@@ -92,25 +99,17 @@ export default {
     ...mapState("music", ["homeMusicList", "audioUrl"]),
   },
   methods: {
-    async nextMusic() {
-      let newmusicID = await this.$store.dispatch(
-        "music/reqNextAdudio",
-        this.musicID
-      );
-      this.musicID = newmusicID;
-      this.$parent.$refs.audio.play();
-    },
     async playMusic(music) {
-      if (music.id == this.musicID) {
+      if (music.id == this.$store.state.music.appMusicID) {
         this.isPlay = 0;
-        this.musicID = -1;
+        this.$store.state.music.appMusicID = -1;
         this.$parent.$refs.audio.pause();
       } else {
         try {
           await this.$store.dispatch("music/reqAdudio", music.id);
           this.$parent.$refs.audio.play();
           this.isPlay = 1;
-          this.musicID = music.id;
+          this.$store.state.music.appMusicID = music.id;
         } catch (error) {
           alert(error);
         }
@@ -134,7 +133,7 @@ export default {
   margin-right: auto;
   margin-top: 2rem;
   background-color: rgb(255, 255, 255);
-  width: 90%;
+  width: 93%;
   min-height: 90rem;
   display: flex;
   justify-content: space-around;
@@ -201,6 +200,7 @@ export default {
   justify-content: center;
 }
 .userInfo {
+  box-shadow: 0 0 10px silver;
   align-items: center;
 }
 .userInfo p {
@@ -227,6 +227,7 @@ export default {
   font-family: YOUYUAN;
 }
 .musicShow {
+  box-shadow: 0 0 10px silver;
   position: relative;
   height: 50rem;
   display: flex;
@@ -298,8 +299,9 @@ export default {
   width: 50%;
 }
 .imageShow {
-  padding: 0.5rem;
+  overflow: hidden;
   height: 45rem;
+  box-shadow: 0 0 10px silver;
 }
 .nearArticles {
   position: relative;

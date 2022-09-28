@@ -5,12 +5,18 @@
       <li @click="$router.push({ name: 'home' })">
         <img src="@/assets/home.png" alt="" />首页
       </li>
-      <li><img src="@/assets/note.png" alt="" />笔记</li>
-      <li><img src="@/assets/demo.png" alt="" />DEMO</li>
+      <li @click="$router.push({ name: 'record' })">
+        <img src="@/assets/note.png" alt="" />记录
+      </li>
+      <li @click="$router.push({ name: 'projects' })">
+        <img src="@/assets/demo.png" alt="" />DEMO
+      </li>
       <li @click="$router.push({ name: 'photoAlbum' })">
         <img src="@/assets/photo.png" alt="" />相册
       </li>
-      <li><img src="@/assets/person.png" alt="" />个人</li>
+      <li @click="$router.push({ name: 'person' })">
+        <img src="@/assets/person.png" alt="" />个人
+      </li>
       <li><img src="@/assets/message.png" alt="" />留言板</li>
       <a href="https://github.com/TohsakaGozen?tab=repositories">
         <li><img src="@/assets/github.png" alt="" />GitHub</li></a
@@ -33,14 +39,14 @@ export default {
 .headerBox {
   z-index: 99;
   position: fixed;
-  opacity: 0.9;
+  opacity: 0.7;
   display: flex;
   justify-content: space-around;
   top: 0;
   left: 0;
   width: 100%;
   height: 5rem;
-  background-color: rgb(251, 227, 203);
+  background-color: rgb(239, 239, 239);
 }
 .headerBox .headerRight {
   display: flex;

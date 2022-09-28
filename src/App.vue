@@ -1,12 +1,12 @@
 <template>
   <div class="app">
     <Header />
-    <audio ref="audio" :src="audioUrl" @ended="nextMusic()"></audio>
     <Sakana />
     <topImage />
     <keep-alive>
       <router-view class="routerContent"></router-view>
     </keep-alive>
+    <audio ref="audio" :src="audioUrl" @ended="nextMusic()"></audio>
   </div>
 </template>
 
@@ -22,12 +22,18 @@ export default {
     Sakana,
     topImage,
   },
+  data() {
+    return {
+      musicID: 0,
+    };
+  },
   methods: {
     async nextMusic() {
       let newmusicID = await this.$store.dispatch(
         "music/reqNextAdudio",
-        this.musicID
+        this.$store.state.music.appMusicID
       );
+      this.$store.state.music.appMusicID = newmusicID;
       this.musicID = newmusicID;
       this.$refs.audio.play();
     },

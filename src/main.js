@@ -10,7 +10,11 @@ Vue.use(CarouselItem)
 
 new Vue({
   render: h => h(App),
+  beforeCreate() {
+    Vue.prototype.$bus = this //安装全局事件总线
+  },
   router,
-  store
+  store,
+
 }).$mount('#app')
 

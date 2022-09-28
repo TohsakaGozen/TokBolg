@@ -265,7 +265,6 @@ export default {
 #waterfall {
   width: 100%;
   margin-top: 5rem;
-
   position: relative;
 }
 @keyframes show-card {
@@ -283,20 +282,26 @@ export default {
   border-radius: 10px;
   padding: 5px;
   padding-left: 0;
+  z-index: -3;
 }
 .img-box img {
+  position: relative;
   padding-left: 10px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 15px;
   opacity: 0;
   transform: scale(0.5);
-  transition: all 0.6s;
-  transition-delay: 0.1s;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.img-box img:hover {
+  scale: 1.05;
+  opacity: 0.8;
 }
 
-/* .default-card-animation {
-      animation: show-card 0.4s;
-      transition: left 0.6s top 0.6s;
-      transition-delay: 0.1s;
-    } */
+.default-card-animation {
+  animation: show-card 0.4s;
+  transition: left 0.6s top 0.6s;
+  transition-delay: 0.1s;
+}
 </style>

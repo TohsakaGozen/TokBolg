@@ -14,6 +14,7 @@ let getAllMusicParamsList = async function () {
             name: music.name
         }
         musicParamsList.push(musicParams)
+        console.log(1111)
     }
     return musicParamsList
 }

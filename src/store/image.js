@@ -1,7 +1,9 @@
 
-import { reqImages } from "@/api/index"
+import { reqImages, reqArticleImages } from "@/api/index"
 const state = {
-    imgaesUrlList: []
+    imgaesUrlList: [],
+    articleImages: [],
+
 }
 
 const actions = {
@@ -10,6 +12,12 @@ const actions = {
         result = JSON.stringify(result)
         result = JSON.parse(result)
         content.commit('GETIMAGESLIST', result)
+    },
+    async getArticleImages(content) {
+        let result = await reqArticleImages()
+        result = JSON.stringify(result)
+        result = JSON.parse(result)
+        content.commit('GETARTICLEIMAGES', result)
     }
 }
 
@@ -21,7 +29,15 @@ const mutations = {
         result.reverse()
         state.imgaesUrlList = result
 
-    }
+    },
+    GETARTICLEIMAGES(state, result) {
+        for (let i in result) {
+            result[i] = require("../../" + result[i] + ".jpg")
+        }
+        result.reverse()
+        state.articleImages = result
+
+    },
 }
 
 export default {
