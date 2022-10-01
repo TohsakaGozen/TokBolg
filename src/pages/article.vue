@@ -1,5 +1,8 @@
 <template>
-  <div class="articleContent" v-html="articleList[0]"></div>
+  <div
+    class="articleContent"
+    v-html="articleList[this.$route.params.index].content"
+  ></div>
 </template>
 
 <script>
@@ -8,9 +11,11 @@ export default {
   computed: {
     ...mapState("article", ["articleList"]),
   },
+  mounted() {
+    console.log(this.$route.params);
+  },
   created() {
     this.$store.dispatch("article/getArticles");
-    console.log(this.articleList[0]);
   },
 };
 </script>

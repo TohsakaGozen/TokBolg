@@ -1,13 +1,21 @@
 <template>
-  <div id="waterfall" ref="waterfall">
-    <div
-      class="img-box default-card-animation"
-      v-for="(item, index) in imgsArr_c"
-      :key="index"
-      :style="{ width: imgWidth + 'px', height: item._height + 'px' }"
-      ref="imgBox"
-    >
-      <img :data-src="item.src" />
+  <div class="AlbumContent">
+    <div v-if="isWatch" @click="exitWatch()" class="watchImage">
+      <img :src="watchImageUrl" alt="" />
+    </div>
+    <div v-if="imgaesUrlList.length == 0" class="loading">
+      <img src="@/assets/loading.gif" alt="" />
+    </div>
+    <div id="waterfall" ref="waterfall">
+      <div
+        class="img-box default-card-animation"
+        v-for="(item, index) in imgsArr_c"
+        :key="index"
+        :style="{ width: imgWidth + 'px', height: item._height + 'px' }"
+        ref="imgBox"
+      >
+        <img @click="watch(item.src)" :data-src="item.src" />
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +26,8 @@ export default {
   name: "waterfall",
   data() {
     return {
+      isWatch: 0,
+      watchImageUrl: "",
       imgsArr: [],
       imgsArr_c: [], // 渲染的图片
       imgCol: 5, // 图片列数
@@ -63,6 +73,14 @@ export default {
     },
   },
   methods: {
+    exitWatch() {
+      this.isWatch = 0;
+      this.watchImageUrl = "";
+    },
+    watch(Imageurl) {
+      this.isWatch = 1;
+      this.watchImageUrl = Imageurl;
+    },
     // 预加载 设置图片宽高
     preLoad() {
       //
@@ -262,6 +280,38 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped >
+.watchImage {
+  top: 0;
+  position: fixed;
+  background-color: rgba(126, 126, 126, 0.6);
+  width: 100%;
+  height: 100vh;
+  z-index: 99999999;
+  display: flex;
+  justify-content: center;
+}
+.watchImage img {
+  top: 5%;
+  height: 90vh;
+  border-radius: 5px;
+  z-index: 9999999999999999999;
+  position: fixed;
+  box-shadow: 0 0 15px rgb(67, 66, 66);
+}
+.AlbumContent {
+  width: 100%;
+  user-select: none;
+}
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.loading img {
+  height: 45vh;
+}
 #waterfall {
   width: 100%;
   margin-top: 5rem;
@@ -282,7 +332,6 @@ export default {
   border-radius: 10px;
   padding: 5px;
   padding-left: 0;
-  z-index: -3;
 }
 .img-box img {
   position: relative;
@@ -298,7 +347,6 @@ export default {
   scale: 1.05;
   opacity: 0.8;
 }
-
 .default-card-animation {
   animation: show-card 0.4s;
   transition: left 0.6s top 0.6s;

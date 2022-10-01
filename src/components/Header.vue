@@ -18,7 +18,7 @@
         <img src="@/assets/person.png" alt="" />个人
       </li>
       <li><img src="@/assets/message.png" alt="" />留言板</li>
-      <a href="https://github.com/TohsakaGozen?tab=repositories">
+      <a target="_blank" href="https://github.com/TohsakaGozen">
         <li><img src="@/assets/github.png" alt="" />GitHub</li></a
       >
       <div class="lr">
@@ -37,6 +37,8 @@ export default {
 
 <style scoped>
 .headerBox {
+  z-index: 99999999;
+  user-select: none;
   z-index: 99;
   position: fixed;
   opacity: 0.7;

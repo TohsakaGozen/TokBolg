@@ -1,32 +1,26 @@
 <template>
   <div class="recordContent">
-    <article class="item">
-      <div class="itemInfo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aliquid
-        repellendus distinctio
+    <form action="">
+      <input
+        type="file"
+        ref="file"
+        name=""
+        v-on:change="handleFileUpload($event)"
+      />
+    </form>
+    <article
+      v-for="(item, index) in articleList"
+      :key="index"
+      class="item"
+      @click="
+        $router.push({ name: 'article', path: '/article', params: { index } })
+      "
+    >
+      <div class="itemTitle">
+        {{ item.title }}
       </div>
-      <img :src="articleImages[0]" alt="" />
-    </article>
-    <article class="item">
-      <div class="itemInfo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aliquid
-        repellendus dist
-      </div>
-      <img :src="articleImages[1]" alt="" />
-    </article>
-    <article class="item">
-      <div class="itemInfo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aliquid
-        repellendus d
-      </div>
-      <img :src="articleImages[2]" alt="" />
-    </article>
-    <article class="item">
-      <div class="itemInfo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aliquid
-        repellendus d
-      </div>
-      <img :src="articleImages[3]" alt="" />
+      <div v-html="item.info" class="itemInfo"></div>
+      <img :src="articleImages[index]" alt="" />
     </article>
   </div>
 </template>
@@ -36,15 +30,31 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState("image", ["articleImages"]),
+    ...mapState("article", ["articleList"]),
+  },
+  methods: {
+    handleFileUpload(event) {
+      event.preventDefault();
+      let formData = new FormData();
+      let file = this.$refs.file.files[0];
+      formData.append("file", file);
+      console.log(formData.get("file"));
+      this.upLoadArticle(formData);
+    },
+    upLoadArticle(formData) {
+      this.$store.dispatch("article/upLoadArticle", formData);
+    },
   },
   created() {
     this.$store.dispatch("image/getArticleImages");
+    this.$store.dispatch("article/getArticles");
   },
 };
 </script>
 
-<style>
+<style scoped>
 .recordContent {
+  position: relative;
   margin-left: auto;
   margin-top: 1rem;
   margin-right: auto;
@@ -56,8 +66,11 @@ export default {
   min-height: 100vh;
 }
 .recordContent .item {
-  width: 80%;
+  width: 90%;
   transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   height: 30rem;
   cursor: pointer;
@@ -66,11 +79,21 @@ export default {
   margin: 3rem;
   overflow: hidden;
 }
+.recordContent .item .itemTitle {
+  font-size: 5rem;
+}
+.recordContent .item .itemInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 2rem;
+}
 .recordContent .item img {
   top: 0;
   left: 0;
   position: absolute;
   width: 100%;
+  z-index: -99999;
   opacity: 0.5;
 
   transition: all 0.3s;
@@ -83,7 +106,7 @@ export default {
   font-family: YOUYUAN;
   text-align: center;
 }
-.recordContent .item img:hover {
+.recordContent .item:hover img {
   scale: 1.1;
 }
 .recordContent .item:hover {

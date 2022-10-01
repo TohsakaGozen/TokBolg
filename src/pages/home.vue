@@ -3,37 +3,28 @@
     <div class="homeLeft">
       <div class="count">
         <p>文章目录</p>
-        <p>共35篇</p>
+        <p>共{{ articleList.length }}篇</p>
       </div>
       <div class="pageList">
-        <div class="article">
-          <div class="header">Promise解决回调地狱</div>
-          <div class="content">
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
+        <article
+          v-for="(item, index) in articleList"
+          :key="index"
+          class="article"
+          @click="
+            $router.push({
+              name: 'article',
+              path: '/article',
+              params: { index },
+            })
+          "
+        >
+          <div class="itemTitle">
+            {{ item.title }}
           </div>
-        </div>
-        <div class="article">
-          <div class="header">Promise解决回调地狱</div>
-          <div class="content">
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
-          </div>
-        </div>
-        <div class="article">
-          <div class="header">Promise解决回调地狱</div>
-          <div class="content">
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
-          </div>
-        </div>
-        <div class="article">
-          <div class="header">Promise解决回调地狱</div>
-          <div class="content">
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxx
-          </div>
-        </div>
+          <div class="itemDate"></div>
+          <div v-html="item.info" class="itemInfo"></div>
+          <img :src="articleImages[index]" alt="" />
+        </article>
       </div>
     </div>
     <div class="homeRight">
@@ -42,7 +33,9 @@
         <p><strong>id</strong> : TohsakaGozen</p>
         <p><strong>qq</strong> : 1679124358</p>
         <p>
-          <a href="https://github.com/TohsakaGozen?tab=repositories">github</a>
+          <a href="https://github.com/TohsakaGozen?tab=repositories"
+            >==>GITHUB</a
+          >
         </p>
       </section>
       <section class="musicShow">
@@ -97,6 +90,8 @@ export default {
   },
   computed: {
     ...mapState("music", ["homeMusicList", "audioUrl"]),
+    ...mapState("image", ["articleImages"]),
+    ...mapState("article", ["articleList"]),
   },
   methods: {
     async playMusic(music) {
@@ -120,6 +115,8 @@ export default {
     try {
       console.log(this.$parent.$refs);
       this.$store.dispatch("music/reqHomeMusicList");
+      this.$store.dispatch("image/getArticleImages");
+      this.$store.dispatch("article/getArticles");
     } catch (error) {
       console.log(error);
     }
@@ -132,7 +129,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2rem;
-  background-color: rgb(255, 255, 255);
   width: 93%;
   min-height: 90rem;
   display: flex;
@@ -142,11 +138,11 @@ export default {
   border-radius: 3px;
 }
 .homeLeft {
+  font-family: YOUYUAN;
   width: 70%;
   overflow: hidden;
   padding-top: 1rem;
-  box-shadow: 0 0 3px rgb(81, 81, 81);
-  background-color: rgb(255, 250, 245);
+  /* box-shadow: 0 0 3px rgb(81, 81, 81); */
   display: flex;
   flex-direction: column;
 }
@@ -163,17 +159,48 @@ export default {
   align-items: center;
 }
 .homeLeft .pageList .article {
+  position: relative;
   margin: 2rem;
-  background-color: rgb(252, 243, 234);
   width: 90%;
+  height: 40rem;
   cursor: pointer;
   box-shadow: 0 0 10px rgb(139, 139, 139);
   border-radius: 0.3rem;
   padding: 0.5rem;
+  overflow: hidden;
   transition: 0.5s;
+}
+.itemTitle {
+  position: relative;
+  text-align: center;
+  font-size: 3rem;
+  z-index: 1;
+}
+.itemInfo {
+  position: relative;
+  text-align: center;
+  height: 80%;
+  z-index: 1;
+  font-weight: normal;
+  color: rgb(59, 59, 59);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 2rem;
+}
+.homeLeft .pageList .article img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.5s;
+  width: 100%;
+  opacity: 0.3;
 }
 .homeLeft .pageList .article:hover {
   scale: 1.03;
+}
+.homeLeft .pageList .article:hover img {
+  scale: 1.1;
 }
 .homeLeft .pageList .article .header {
   font-size: 2rem;
@@ -184,6 +211,7 @@ export default {
   width: 100%;
   height: 35rem;
   font-size: 1.4rem;
+  font-weight: 100;
   overflow: hidden;
 }
 .homeRight {
@@ -191,7 +219,7 @@ export default {
 }
 .homeRight section {
   min-height: 20rem;
-  background-color: antiquewhite;
+  background-color: rgb(252, 249, 245, 0.5);
   margin: 2rem;
   margin-right: 0;
   border-radius: 3px;
@@ -293,10 +321,9 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: rgb(218, 194, 170);
 }
 .loading img {
-  width: 50%;
+  width: 70%;
 }
 .imageShow {
   overflow: hidden;

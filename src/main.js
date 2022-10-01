@@ -7,7 +7,6 @@ Vue.config.productionTip = false
 Vue.use(Carousel)
 Vue.use(CarouselItem)
 
-
 new Vue({
   render: h => h(App),
   beforeCreate() {

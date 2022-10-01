@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import music from './music'
 import image from './image'
 import article from './article'
+import demo from './demo'
 //需要使用插件一次
 Vue.use(Vuex)
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
     modules: {
         music,
         image,
-        article
+        article,
+        demo
     }
 })

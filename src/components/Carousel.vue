@@ -24,6 +24,7 @@ export default {
 
 <style scoped>
 .el-carousel__item {
+  z-index: 0;
   width: 100%;
 }
 .el-carousel__item img {

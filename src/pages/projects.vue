@@ -1,32 +1,12 @@
 <template>
   <div class="recordContent">
-    <article @click="$router.push({ name: 'article' })" class="item">
+    <article v-for="(item, index) in demoList" :key="index" class="item">
       <div class="itemInfo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aliquid
-        repellendus distinctio
+        {{ item.name }}
       </div>
-      <img :src="articleImages[5]" alt="" />
-    </article>
-    <article class="item">
-      <div class="itemInfo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aliquid
-        repellendus dist
-      </div>
-      <img :src="articleImages[6]" alt="" />
-    </article>
-    <article class="item">
-      <div class="itemInfo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aliquid
-        repellendus d
-      </div>
-      <img :src="articleImages[7]" alt="" />
-    </article>
-    <article class="item">
-      <div class="itemInfo">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aliquid
-        repellendus d
-      </div>
-      <img :src="articleImages[8]" alt="" />
+      <a target="_blank" :href="item.html_url"
+        ><img :src="articleImages[index]" alt="" />s</a
+      >
     </article>
   </div>
 </template>
@@ -36,27 +16,30 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState("image", ["articleImages"]),
+    ...mapState("demo", ["demoList"]),
   },
   created() {
     this.$store.dispatch("image/getArticleImages");
+    this.$store.dispatch("demo/getDemos");
   },
 };
 </script>
 
-<style>
+<style scoped>
 .recordContent {
   margin-left: auto;
   margin-top: 1rem;
   margin-right: auto;
-  width: 80%;
+  width: 100%;
   padding: 2rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   min-height: 100vh;
 }
 .recordContent .item {
-  width: 80%;
+  width: 20%;
   transition: all 0.3s;
   position: relative;
   height: 30rem;
@@ -68,9 +51,10 @@ export default {
 }
 .recordContent .item img {
   top: 0;
-  left: 0;
+  left: -40%;
+  display: flex;
   position: absolute;
-  width: 100%;
+  height: 100%;
   opacity: 0.5;
 
   transition: all 0.3s;
@@ -78,8 +62,9 @@ export default {
 .item .itemInfo {
   display: flex;
   height: 100%;
+  justify-content: center;
   align-items: center;
-  font-size: 5.5rem;
+  font-size: 3.5rem;
   font-family: YOUYUAN;
   text-align: center;
 }
