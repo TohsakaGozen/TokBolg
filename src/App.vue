@@ -2,22 +2,26 @@
   <div class="app">
     <Header />
     <live2d />
+    <musicPlayer />
     <Sakana />
     <topImage />
-    <vueCanvasNest :config="config" :el="'.app'" />
-    <keep-alive>
-      <router-view class="routerContent"> </router-view>
-    </keep-alive>
+    <router-view
+      data-aos="fade-down"
+      data-aos-once="true"
+      data-aos-duration="2000"
+      class="routerContent"
+    >
+    </router-view>
     <audio ref="audio" :src="audioUrl" @ended="nextMusic()"></audio>
   </div>
 </template>
 
 <script>
+import musicPlayer from "@/components/musicPlayer.vue";
 import Header from "@/components/Header";
 import Sakana from "@/components/Sakana";
 import topImage from "@/components/TopImage.vue";
 import live2d from "@/components/live2d.vue";
-import vueCanvasNest from "vue-canvas-nest";
 import { mapState } from "vuex";
 export default {
   name: "App",
@@ -25,18 +29,12 @@ export default {
     Header,
     Sakana,
     topImage,
+    musicPlayer,
     live2d,
-    vueCanvasNest,
   },
   data() {
     return {
       musicID: 0,
-      config: {
-        color: "24, 255, 201",
-        opacity: 1,
-        zIndex: -999,
-        count: 100,
-      },
     };
   },
   methods: {
@@ -58,6 +56,9 @@ export default {
 </script>
 
 <style>
+#nprogress .bar {
+  background: rgb(167, 255, 202) !important;
+}
 * {
   padding: 0;
   margin: 0;
@@ -68,10 +69,11 @@ html {
   font-size: 10px;
 }
 html::-webkit-scrollbar-thumb {
+  width: 0.5rem;
   background-color: rgb(136, 255, 188);
 }
 html::-webkit-scrollbar {
-  width: 1rem;
+  width: 0.5rem;
   background-color: rgb(221, 221, 221);
 }
 .routerContent {

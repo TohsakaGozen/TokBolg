@@ -96,7 +96,6 @@ export default {
           if (this.imgsArr.length === this.loadedCount) {
             this.preloaded();
           }
-          console.log(111111);
         } else {
           let img = new Image();
           img.src = item.src;
@@ -215,8 +214,6 @@ export default {
       setTimeout(() => {
         this.loadImages(this.newCounts);
       }, 500);
-
-      console.log("--this.imgsArr--", this.imgsArr);
     },
     // 节流函数
     throttle(fn, time) {
@@ -246,8 +243,6 @@ export default {
         img.info = i;
         this.imgsArr.push(img);
       }
-
-      console.log(this.imgsArr);
     },
   },
   created() {

@@ -1,5 +1,10 @@
 <template>
-  <div class="topImage">
+  <div
+    class="topImage"
+    data-aos="fade-down"
+    data-aos-once="true"
+    data-aos-duration="2000"
+  >
     <div class="img">
       <img :src="showTopImage" alt="" />
       <h4>{{ this.$route.meta[0] }}</h4>
@@ -9,6 +14,7 @@
 </template>
 
 <script>
+import AOS from "aos";
 import { mapState } from "vuex";
 import wave from "./wave.vue";
 export default {
@@ -26,11 +32,12 @@ export default {
     this.$store.dispatch("image/getArticleImages");
     setTimeout(() => {
       let i = Math.ceil(Math.random() * this.articleImages.length - 1);
-      console.log(i);
       this.showTopImage = this.articleImages[i];
     }, 200);
   },
-  mounted() {},
+  mounted() {
+    AOS.init();
+  },
 };
 </script>
 

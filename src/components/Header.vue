@@ -41,14 +41,13 @@ export default {
   user-select: none;
   z-index: 99;
   position: fixed;
-  opacity: 0.7;
   display: flex;
   justify-content: space-around;
   top: 0;
   left: 0;
   width: 100%;
   height: 5rem;
-  background-color: rgb(239, 239, 239);
+  background-color: rgb(239, 239, 239, 0.9);
 }
 .headerBox .headerRight {
   display: flex;

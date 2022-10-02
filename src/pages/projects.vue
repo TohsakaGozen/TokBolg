@@ -1,6 +1,13 @@
 <template>
   <div class="recordContent">
-    <article v-for="(item, index) in demoList" :key="index" class="item">
+    <article
+      v-for="(item, index) in demoList"
+      data-aos="fade-down"
+      data-aos-once="true"
+      data-aos-duration="2000"
+      :key="index"
+      class="item"
+    >
       <div class="itemInfo">
         {{ item.name }}
       </div>

@@ -11,10 +11,10 @@ let getAllMusicParamsList = async function () {
     for (let music of result.songs) {
         musicParams = {
             id: music.id,
-            name: music.name
+            name: music.name,
+            img: music.al.picUrl
         }
         musicParamsList.push(musicParams)
-        console.log(1111)
     }
     return musicParamsList
 }

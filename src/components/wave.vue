@@ -11,7 +11,7 @@ export default {
   name: "Wave",
   props: {
     waveAllHeight: { default: 100 }, // 波浪的整体高度
-    waveCount: { default: 3 }, // 波峰个数
+    waveCount: { default: 4 }, // 波峰个数
     waveHeight: { default: 70 }, // 波浪起伏高度
     // 波浪颜色
     waveColor: {
@@ -85,7 +85,7 @@ export default {
         ctx.lineTo(startX + waveWidth, 3000);
         ctx.lineTo(startX, 3000);
         ctx.fill();
-        setTimeout(move, $time / 60); // 速度
+        setTimeout(move, $time / 70); // 速度
       }
 
       move();

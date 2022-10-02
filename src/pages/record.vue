@@ -1,17 +1,14 @@
 <template>
   <div class="recordContent">
-    <form action="">
-      <input
-        type="file"
-        ref="file"
-        name=""
-        v-on:change="handleFileUpload($event)"
-      />
-    </form>
+    <input type="file" ref="file" v-on:change="handleFileUpload($event)" />
+    <div class="uploadFile" @click="$refs.file.click()">上传文章</div>
     <article
       v-for="(item, index) in articleList"
       :key="index"
       class="item"
+      data-aos="fade-down"
+      data-aos-once="true"
+      data-aos-duration="2000"
       @click="
         $router.push({ name: 'article', path: '/article', params: { index } })
       "
@@ -49,10 +46,32 @@ export default {
     this.$store.dispatch("image/getArticleImages");
     this.$store.dispatch("article/getArticles");
   },
+  mounted() {},
 };
 </script>
 
 <style scoped>
+input {
+  display: none;
+}
+.uploadFile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: YOUYUAN;
+  font-size: 1.4rem;
+  cursor: pointer;
+  width: 10rem;
+  box-shadow: 0 0 2px silver;
+  transition: all 0.3s;
+  border-radius: 5px;
+  height: 3rem;
+  background-color: rgb(224, 227, 226);
+}
+.uploadFile:hover {
+  background-color: rgb(255, 133, 67);
+  scale: 1.1;
+}
 .recordContent {
   position: relative;
   margin-left: auto;

@@ -10,6 +10,9 @@
           v-for="(item, index) in articleList"
           :key="index"
           class="article"
+          data-aos="fade-down"
+          data-aos-once="true"
+          data-aos-duration="3000"
           @click="
             $router.push({
               name: 'article',
@@ -20,6 +23,9 @@
         >
           <div class="itemTitle">
             {{ item.title }}
+          </div>
+          <div class="itemTime">
+            {{ item.time }}
           </div>
           <div class="itemDate"></div>
           <div v-html="item.info" class="itemInfo"></div>
@@ -81,9 +87,7 @@ import { mapState } from "vuex";
 export default {
   name: "home",
   data() {
-    return {
-      isPlay: 0,
-    };
+    return {};
   },
   components: {
     carousel,
@@ -96,14 +100,13 @@ export default {
   methods: {
     async playMusic(music) {
       if (music.id == this.$store.state.music.appMusicID) {
-        this.isPlay = 0;
         this.$store.state.music.appMusicID = -1;
         this.$parent.$refs.audio.pause();
+        this.$store.dispatch("music/pasueMusic");
       } else {
         try {
           await this.$store.dispatch("music/reqAdudio", music.id);
           this.$parent.$refs.audio.play();
-          this.isPlay = 1;
           this.$store.state.music.appMusicID = music.id;
         } catch (error) {
           alert(error);
@@ -113,7 +116,6 @@ export default {
   },
   created() {
     try {
-      console.log(this.$parent.$refs);
       this.$store.dispatch("music/reqHomeMusicList");
       this.$store.dispatch("image/getArticleImages");
       this.$store.dispatch("article/getArticles");
@@ -121,6 +123,7 @@ export default {
       console.log(error);
     }
   },
+  mounted() {},
 };
 </script>
 
@@ -175,6 +178,15 @@ export default {
   text-align: center;
   font-size: 3rem;
   z-index: 1;
+}
+.itemTime {
+  width: 100%;
+  display: flex;
+  font-size: 1.5rem;
+  padding: 5px;
+  font-family: YOUYUAN;
+  color: rgb(254, 112, 112);
+  justify-content: center;
 }
 .itemInfo {
   position: relative;

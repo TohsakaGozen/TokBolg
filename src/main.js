@@ -6,6 +6,10 @@ import { Carousel, CarouselItem, InfiniteScroll } from 'element-ui'
 Vue.config.productionTip = false
 Vue.use(Carousel)
 Vue.use(CarouselItem)
+import AOS from "aos";
+import "../node_modules/aos/dist/aos.css";
+Vue.use(AOS)
+
 
 new Vue({
   render: h => h(App),
