@@ -2,14 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import store from './store'
-import { Carousel, CarouselItem, InfiniteScroll } from 'element-ui'
+import { Carousel, CarouselItem, InfiniteScroll, Message } from 'element-ui'
 Vue.config.productionTip = false
 Vue.use(Carousel)
 Vue.use(CarouselItem)
 import AOS from "aos";
 import "../node_modules/aos/dist/aos.css";
 Vue.use(AOS)
-
+Vue.prototype.$message = Message
 
 new Vue({
   render: h => h(App),

@@ -13,10 +13,13 @@ const actions = {
         content.commit('GETARTUCLES', result)
     },
     async upLoadArticle(content, formData) {
+        console.log(formData)
         let result = await upLoadArticle(formData)
-        result = JSON.stringify(result)
-        result = JSON.parse(result)
-        content.commit('GETARTUCLES', result)
+        if (result.ok != 1) {
+            return Promise.reject(new Error('上传失败'))
+        } else {
+            return '上传成功'
+        }
     }
 }
 

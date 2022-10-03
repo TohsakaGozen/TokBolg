@@ -1,8 +1,13 @@
 <template>
-  <div
-    class="articleContent"
-    v-html="articleList[this.$route.params.index].content"
-  ></div>
+  <div class="articleBox">
+    <div class="articleContentItemTime">
+      {{ articleList[this.$route.params.index].time }}
+    </div>
+    <div
+      class="articleContent"
+      v-html="articleList[this.$route.params.index].content"
+    ></div>
+  </div>
 </template>
 
 <script>
@@ -21,6 +26,20 @@ export default {
 </script>
 
 <style>
+.articleBox {
+  width: 98vw;
+}
+.articleContentItemTime {
+  position: absolute;
+  top: 8rem;
+  width: 100%;
+  display: flex;
+  font-size: 1.7rem;
+  padding: 5px;
+  font-family: YOUYUAN;
+  color: rgb(0, 190, 223);
+  justify-content: center;
+}
 .articleContent {
   margin-top: 3rem;
   width: 98vw;

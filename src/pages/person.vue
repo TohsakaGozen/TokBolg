@@ -62,6 +62,7 @@ export default {};
 .introduce {
   width: 99.7vw;
   min-height: 60rem;
+  font-size: 1.4rem;
   display: flex;
   justify-content: center;
   padding: 3rem;

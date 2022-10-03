@@ -294,6 +294,7 @@ export default {
   box-shadow: 0 0 15px rgb(67, 66, 66);
 }
 .AlbumContent {
+  display: inline;
   width: 100%;
   user-select: none;
 }

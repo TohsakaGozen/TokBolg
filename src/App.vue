@@ -70,7 +70,7 @@ html {
 }
 html::-webkit-scrollbar-thumb {
   width: 0.5rem;
-  background-color: rgb(136, 255, 188);
+  background-color: rgb(26, 148, 255);
 }
 html::-webkit-scrollbar {
   width: 0.5rem;

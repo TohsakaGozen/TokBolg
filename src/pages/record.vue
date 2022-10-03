@@ -16,6 +16,9 @@
       <div class="itemTitle">
         {{ item.title }}
       </div>
+      <div class="itemTime">
+        {{ item.time }}
+      </div>
       <div v-html="item.info" class="itemInfo"></div>
       <img :src="articleImages[index]" alt="" />
     </article>
@@ -35,11 +38,24 @@ export default {
       let formData = new FormData();
       let file = this.$refs.file.files[0];
       formData.append("file", file);
-      console.log(formData.get("file"));
+      formData.append("filename", file.name);
       this.upLoadArticle(formData);
     },
     upLoadArticle(formData) {
-      this.$store.dispatch("article/upLoadArticle", formData);
+      try {
+        this.$store.dispatch("article/upLoadArticle", formData);
+        this.$message({
+          showClose: true,
+          message: "上传成功",
+          type: "success",
+        });
+      } catch (error) {
+        this.$message({
+          showClose: true,
+          message: "上传失败",
+          type: "warning",
+        });
+      }
     },
   },
   created() {
@@ -53,6 +69,15 @@ export default {
 <style scoped>
 input {
   display: none;
+}
+.itemTime {
+  width: 100%;
+  display: flex;
+  font-size: 1.7rem;
+  padding: 5px;
+  font-family: YOUYUAN;
+  color: rgb(255, 0, 0);
+  justify-content: center;
 }
 .uploadFile {
   display: flex;

@@ -64,7 +64,7 @@
               alt=""
             />
             <img
-              v-if="$store.state.music.appMusicID == music.id"
+              v-if="$store.state.music.appMusicID == music.id && isPlay == true"
               src="../assets/pause.png"
               alt=""
             />
@@ -93,7 +93,7 @@ export default {
     carousel,
   },
   computed: {
-    ...mapState("music", ["homeMusicList", "audioUrl"]),
+    ...mapState("music", ["homeMusicList", "audioUrl", "isPlay"]),
     ...mapState("image", ["articleImages"]),
     ...mapState("article", ["articleList"]),
   },
@@ -182,10 +182,10 @@ export default {
 .itemTime {
   width: 100%;
   display: flex;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   padding: 5px;
   font-family: YOUYUAN;
-  color: rgb(254, 112, 112);
+  color: rgb(255, 0, 0);
   justify-content: center;
 }
 .itemInfo {
