@@ -13,14 +13,19 @@
 <script>
 import { mapState } from "vuex";
 export default {
+  data() {
+    return {
+      isSortUp: true,
+    };
+  },
   computed: {
     ...mapState("article", ["articleList"]),
   },
   mounted() {
-    console.log(this.$route.params);
+    this.$store.dispatch("article/getArticles", this.isSortUp);
   },
   created() {
-    this.$store.dispatch("article/getArticles");
+    this.isSortUp = this.$route.params.isSortUp;
   },
 };
 </script>
@@ -35,14 +40,13 @@ export default {
   width: 100%;
   display: flex;
   font-size: 1.7rem;
-  padding: 5px;
   font-family: YOUYUAN;
   color: rgb(0, 190, 223);
   justify-content: center;
 }
 .articleContent {
   margin-top: 3rem;
-  width: 98vw;
+  width: 99vw;
   overflow: hidden;
 }
 .markdown-body {
@@ -62,8 +66,8 @@ export default {
     linear-gradient(1turn, rgba(159, 219, 252, 0.15) 3%, transparent 0);
   background-size: 20px 20px;
   background-position: 50%;
-  padding-left: 150px;
-  padding-right: 150px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .markdown-body h1,

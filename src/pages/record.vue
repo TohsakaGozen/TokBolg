@@ -1,7 +1,7 @@
 <template>
   <div class="recordContent">
     <input type="file" ref="file" v-on:change="handleFileUpload($event)" />
-    <div class="uploadFile" @click="$refs.file.click()">上传文章</div>
+    <div class="uploadFile" @click="fileUpload()">上传文章</div>
     <article
       v-for="(item, index) in articleList"
       :key="index"
@@ -10,7 +10,11 @@
       data-aos-once="true"
       data-aos-duration="2000"
       @click="
-        $router.push({ name: 'article', path: '/article', params: { index } })
+        $router.push({
+          name: 'article',
+          path: '/article',
+          params: { index, isSortUp: true },
+        })
       "
     >
       <div class="itemTitle">
@@ -33,6 +37,18 @@ export default {
     ...mapState("article", ["articleList"]),
   },
   methods: {
+    fileUpload() {
+      if (1) {
+        this.$refs.file.click();
+      } else {
+        this.$message({
+          showClose: true,
+          message: "仅限管理员用户登录使用",
+          type: "warning",
+        });
+        this.$bus.$emit("login");
+      }
+    },
     handleFileUpload(event) {
       event.preventDefault();
       let formData = new FormData();
@@ -41,14 +57,17 @@ export default {
       formData.append("filename", file.name);
       this.upLoadArticle(formData);
     },
-    upLoadArticle(formData) {
+    async upLoadArticle(formData) {
       try {
-        this.$store.dispatch("article/upLoadArticle", formData);
+        await this.$store.dispatch("article/upLoadArticle", formData);
         this.$message({
           showClose: true,
           message: "上传成功",
           type: "success",
         });
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       } catch (error) {
         this.$message({
           showClose: true,
@@ -60,7 +79,7 @@ export default {
   },
   created() {
     this.$store.dispatch("image/getArticleImages");
-    this.$store.dispatch("article/getArticles");
+    this.$store.dispatch("article/getArticles", true);
   },
   mounted() {},
 };

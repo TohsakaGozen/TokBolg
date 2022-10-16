@@ -35,7 +35,7 @@ let router = new VueRouter({
             component: () => import("@/pages/person")
         },
         {
-            path: '/article/:index',
+            path: '/article/:index/:isSortUp',
             name: 'article',
             meta: ["ARTICLE"],
             component: () => import("@/pages/article")

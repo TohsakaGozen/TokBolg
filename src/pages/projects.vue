@@ -1,5 +1,8 @@
 <template>
   <div class="recordContent">
+    <div v-show="demoList.length == 0" class="loading">
+      <img src="@/assets/loading.gif" alt="" />
+    </div>
     <article
       v-for="(item, index) in demoList"
       data-aos="fade-down"
@@ -33,6 +36,16 @@ export default {
 </script>
 
 <style scoped>
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.loading img {
+  height: 45vh;
+}
 .recordContent {
   margin-left: auto;
   margin-top: 1rem;

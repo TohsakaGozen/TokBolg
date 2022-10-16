@@ -11,7 +11,7 @@ import 'nprogress/nprogress.css'
 const requests = axios.create({
     //配置对象
     //基础路径，发起请求的时候，路径当中会出现api
-    baseURL: 'http://47.108.218.252:3000',
+    baseURL: 'http://47.109.61.218:3000',
     timeout: 10000,
 })
 

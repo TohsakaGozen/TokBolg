@@ -28,12 +28,16 @@ export default {
   computed: {
     ...mapState("image", ["articleImages"]),
   },
-  created() {
-    this.$store.dispatch("image/getArticleImages");
-    setTimeout(() => {
+  methods: {
+    async requireTopImages() {
+      await this.$store.dispatch("image/getArticleImages");
       let i = Math.ceil(Math.random() * this.articleImages.length - 1);
       this.showTopImage = this.articleImages[i];
-    }, 200);
+      console.log(this.articleImages.length);
+    },
+  },
+  created() {
+    this.requireTopImages();
   },
   mounted() {
     AOS.init();

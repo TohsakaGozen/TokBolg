@@ -1,5 +1,6 @@
 <template>
   <div class="headerBox">
+    <login v-show="loginWindow" />
     <div class="headerLeft">TOKBLOG</div>
     <div class="headerRight">
       <li @click="$router.push({ name: 'home' })">
@@ -22,16 +23,47 @@
         <li><img src="@/assets/github.png" alt="" />GitHub</li></a
       >
       <div class="lr">
-        <li>登录</li>
+        <li @click="goLogin()">登录</li>
         <p>|</p>
-        <li>注册</li>
+        <li @click="goRegister()">注册</li>
       </div>
     </div>
   </div>
 </template>
 <script>
+import login from "@/components/Login.vue";
 export default {
   name: "Header",
+  data() {
+    return {
+      loginWindow: false,
+      registerWindow: false,
+    };
+  },
+  components: {
+    login,
+  },
+  methods: {
+    goLogin() {
+      this.loginWindow = !this.loginWindow;
+      this.$bus.$emit("register", false);
+      this.$bus.$emit("focus1");
+    },
+    goRegister() {
+      this.loginWindow = !this.loginWindow;
+      this.registerWindow = !this.registerWindow;
+      this.$bus.$emit("register", true);
+      this.$bus.$emit("focus2");
+    },
+  },
+  mounted() {
+    this.$bus.$on("loginClose", () => {
+      this.loginWindow = false;
+    });
+    this.$bus.$on("login", () => {
+      this.loginWindow = true;
+    });
+  },
 };
 </script>
 

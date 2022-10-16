@@ -12,7 +12,7 @@ const test = axios.create({
     //配置对象
     //基础路径，发起请求的时候，路径当中会出现api
     // baseURL: 'http://47.108.218.252:3001',
-    baseURL: 'http://localhost:3001',
+    baseURL: 'http://47.109.61.218:3001',
     timeout: 5000,
 })
 

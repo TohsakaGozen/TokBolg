@@ -14,6 +14,12 @@ export const reqArticles = () => request({ url: `/article`, method: 'get' })
 export const upLoadArticle = (file) => request({
     url: `/upload`, data: file, method: 'post', header: { 'Content-Type': 'multipart/form-data' }
 })
+export const reqRegister = (userInfo) => request({
+    url: `/register`, data: userInfo, method: 'post', header: { 'Content-Type': 'application/json' }
+})
+export const reqLogin = (userInfo) => request({
+    url: `/login`, data: userInfo, method: 'post', header: { 'Content-Type': 'application/json' }
+})
 
 //gihubApi
 export const reqgithubRepos = (username) => reqDemo({ url: `/${username}/repos`, method: 'get' })

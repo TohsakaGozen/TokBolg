@@ -3,7 +3,21 @@
     <div class="homeLeft">
       <div class="count">
         <p>文章目录</p>
-        <p>共{{ articleList.length }}篇</p>
+        <p>
+          <img
+            @click="changeSort()"
+            v-show="isSortUp"
+            src="@/assets/sortUp.png"
+            alt=""
+          />
+          <img
+            @click="changeSort()"
+            v-show="!isSortUp"
+            src="@/assets/sortDown.png"
+            alt=""
+          />
+          共{{ articleList.length }}篇
+        </p>
       </div>
       <div class="pageList">
         <article
@@ -17,7 +31,7 @@
             $router.push({
               name: 'article',
               path: '/article',
-              params: { index },
+              params: { index, isSortUp },
             })
           "
         >
@@ -87,7 +101,9 @@ import { mapState } from "vuex";
 export default {
   name: "home",
   data() {
-    return {};
+    return {
+      isSortUp: true,
+    };
   },
   components: {
     carousel,
@@ -98,6 +114,10 @@ export default {
     ...mapState("article", ["articleList"]),
   },
   methods: {
+    changeSort() {
+      this.isSortUp = !this.isSortUp;
+      this.$store.dispatch("article/getArticles", this.isSortUp);
+    },
     async playMusic(music) {
       if (music.id == this.$store.state.music.appMusicID) {
         this.$store.state.music.appMusicID = -1;
@@ -118,7 +138,7 @@ export default {
     try {
       this.$store.dispatch("music/reqHomeMusicList");
       this.$store.dispatch("image/getArticleImages");
-      this.$store.dispatch("article/getArticles");
+      this.$store.dispatch("article/getArticles", this.isSortUp);
     } catch (error) {
       console.log(error);
     }
@@ -154,6 +174,17 @@ export default {
   align-self: center;
   width: 95%;
   justify-content: space-between;
+}
+.homeLeft .count p {
+  width: 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2rem;
+}
+.homeLeft .count p img {
+  height: 120%;
+  cursor: pointer;
 }
 .homeLeft .pageList {
   display: flex;

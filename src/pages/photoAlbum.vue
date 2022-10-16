@@ -3,7 +3,7 @@
     <div v-if="isWatch" @click="exitWatch()" class="watchImage">
       <img :src="watchImageUrl" alt="" />
     </div>
-    <div v-if="imgaesUrlList.length == 0" class="loading">
+    <div v-show="imgsArr_c.length == 0" class="loading">
       <img src="@/assets/loading.gif" alt="" />
     </div>
     <div id="waterfall" ref="waterfall">
