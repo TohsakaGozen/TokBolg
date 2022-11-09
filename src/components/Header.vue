@@ -18,20 +18,28 @@
       <li @click="$router.push({ name: 'person' })">
         <img src="@/assets/person.png" alt="" />个人
       </li>
-      <li><img src="@/assets/message.png" alt="" />留言板</li>
+      <li @click="$router.push({ name: 'comment' })">
+        <img src="@/assets/message.png" alt="" />留言板
+      </li>
       <a target="_blank" href="https://github.com/TohsakaGozen">
         <li><img src="@/assets/github.png" alt="" />GitHub</li></a
       >
       <div class="lr">
-        <li @click="goLogin()">登录</li>
+        <li v-if="userInfo">欢迎光临捏</li>
+        <li v-if="!userInfo" @click="goLogin()">登录</li>
         <p>|</p>
-        <li @click="goRegister()">注册</li>
+        <li id="user" v-if="userInfo">
+          {{ userInfo.username }}
+          <p @click="exitLogin()">退出登录</p>
+        </li>
+        <li v-if="!userInfo" @click="goRegister()">注册</li>
       </div>
     </div>
   </div>
 </template>
 <script>
 import login from "@/components/Login.vue";
+import { mapState } from "vuex";
 export default {
   name: "Header",
   data() {
@@ -43,7 +51,13 @@ export default {
   components: {
     login,
   },
+  computed: {
+    ...mapState("loginAndRegister", ["token", "userInfo"]),
+  },
   methods: {
+    exitLogin() {
+      this.$store.dispatch("loginAndRegister/exitLogin");
+    },
     goLogin() {
       this.loginWindow = !this.loginWindow;
       this.$bus.$emit("register", false);
@@ -110,9 +124,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 .headerBox .headerRight .lr li {
   padding: 0.2rem;
+  transition: all 0.2s;
 }
 .headerBox .headerRight li:hover {
   scale: 1.1;
@@ -129,5 +145,25 @@ export default {
 a {
   text-decoration: none;
   color: rgb(0, 0, 0);
+}
+#user {
+  display: flex;
+  flex-direction: column;
+}
+#user p {
+  display: none;
+}
+#user p:hover {
+  color: white;
+  background-color: rgb(63, 79, 79);
+}
+#user:hover {
+  padding: 1.5rem;
+  scale: 1;
+  height: 5rem;
+}
+#user:hover#user p {
+  display: block;
+  font-size: 1rem;
 }
 </style>

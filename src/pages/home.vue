@@ -21,7 +21,7 @@
       </div>
       <div class="pageList">
         <article
-          v-for="(item, index) in articleList"
+          v-for="(item, index) in showList[i].articles"
           :key="index"
           class="article"
           data-aos="fade-down"
@@ -45,6 +45,17 @@
           <div v-html="item.info" class="itemInfo"></div>
           <img :src="articleImages[index]" alt="" />
         </article>
+      </div>
+      <div class="block">
+        <el-pagination
+          :page-size="3"
+          @current-change="handleCurrentChange($event)"
+          :current-page="showList[i].currentPage"
+          :pager-count="7"
+          layout="prev, pager, next"
+          :total="articleList.length"
+        >
+        </el-pagination>
       </div>
     </div>
     <div class="homeRight">
@@ -103,6 +114,7 @@ export default {
   data() {
     return {
       isSortUp: true,
+      i: 0,
     };
   },
   components: {
@@ -111,9 +123,12 @@ export default {
   computed: {
     ...mapState("music", ["homeMusicList", "audioUrl", "isPlay"]),
     ...mapState("image", ["articleImages"]),
-    ...mapState("article", ["articleList"]),
+    ...mapState("article", ["showList", "articleList"]),
   },
   methods: {
+    handleCurrentChange(event) {
+      this.i = event - 1;
+    },
     changeSort() {
       this.isSortUp = !this.isSortUp;
       this.$store.dispatch("article/getArticles", this.isSortUp);
@@ -148,6 +163,11 @@ export default {
 </script>
 
 <style scoped>
+.block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .homeBox {
   margin-left: auto;
   margin-right: auto;

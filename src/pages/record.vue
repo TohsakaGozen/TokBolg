@@ -35,10 +35,12 @@ export default {
   computed: {
     ...mapState("image", ["articleImages"]),
     ...mapState("article", ["articleList"]),
+    ...mapState("loginAndRegister", ["token"]),
+    ...mapState("loginAndRegister", ["userInfo"]),
   },
   methods: {
     fileUpload() {
-      if (1) {
+      if (this.userInfo.isManager) {
         this.$refs.file.click();
       } else {
         this.$message({
@@ -65,6 +67,7 @@ export default {
           message: "上传成功",
           type: "success",
         });
+
         setTimeout(() => {
           location.reload();
         }, 1000);
@@ -74,6 +77,7 @@ export default {
           message: "上传失败",
           type: "warning",
         });
+        console.log(this.$store.state.loginAndRegister.token);
       }
     },
   },

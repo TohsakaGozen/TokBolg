@@ -2,7 +2,7 @@
 import { reqArticles, upLoadArticle } from "@/api/index"
 const state = {
     articleList: [],
-
+    showList: []
 }
 
 const actions = {
@@ -42,7 +42,7 @@ const mutations = {
                 day = value2[0]
                 hour = value3[0]
                 minute = value3[1]
-                counttime1 = year * 10000 + month * 1000 + day * 100 + hour * 10 + minute
+                counttime1 = parseInt(year) * 100000 + parseInt(month) * 10000 + parseInt(day) * 100 + parseInt(hour) * 10 + parseInt(minute)
                 value1 = b[time].split('-')
                 value2 = value1[2].split(' ')
                 value3 = value2[1].split(':')
@@ -51,7 +51,7 @@ const mutations = {
                 day = value2[0]
                 hour = value3[0]
                 minute = value3[1]
-                counttime2 = year * 10000 + month * 1000 + day * 100 + hour * 10 + minute
+                counttime2 = parseInt(year) * 100000 + parseInt(month) * 10000 + parseInt(day) * 100 + parseInt(hour) * 10 + parseInt(minute)
                 if (result[1] == 1) {
                     return counttime2 - counttime1
                 } else {
@@ -59,7 +59,42 @@ const mutations = {
                 }
             }
         }
+        for (let t of result[0]) {
+            let a = t.time.split(":")
+            if (a[1].length == 1) {
+                a[1] = 0 + a[1]
+                a = a[0] + ":" + a[1]
+                t.time = a
+            }
+
+        }
         state.articleList = result[0].sort(compare('time'))
+        state.showList = []
+        let i = 1
+        let t = 1
+        let str4 = []
+        let onePage = {
+            currentPage: 0,
+            articles: []
+        }
+        state.articleList.forEach(article => {
+            str4.push(article)
+            if (i % 3 == 0) {
+                onePage.currentPage = t
+                onePage.articles = str4
+                state.showList.push(onePage)
+                onePage = {
+                    currentPage: 0,
+                    articles: []
+                }
+                str4 = []
+                t++
+            }
+            i++
+        });
+        onePage.currentPage = t
+        onePage.articles = str4
+        state.showList.push(onePage)
     },
 }
 

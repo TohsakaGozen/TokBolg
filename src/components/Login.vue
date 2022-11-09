@@ -1,5 +1,5 @@
 <template>
-  <div class="loginBox">
+  <div @keydown.enter="login()" class="loginBox">
     <div v-if="!registerWindow" class="boxContent">
       <div @click="closeLoginWindow()" class="close">X</div>
       <div class="title">登录</div>
@@ -10,11 +10,17 @@
           placeholder="请输入用户名"
           type="text"
         />
+        <div class="warning">
+          <p v-if="userpromptInfo">用户名不能为空</p>
+        </div>
         <input
           v-model="loginUserInfo.password"
           placeholder="请输入密码"
           type="password"
         />
+        <div class="warning">
+          <p v-if="pwdpromptInfo">密码不能为空</p>
+        </div>
         <button @click="login()">LOGIN</button>
       </div>
       <div class="other">
@@ -32,21 +38,57 @@
           ref="input2"
           type="text"
         />
+        <div class="warning">
+          <p
+            v-if="
+              (registerUserInfo.username.length < 4 ||
+                registerUserInfo.username.length > 15) &&
+              registerUserInfo.username.length > 0
+            "
+          >
+            请输入4-15位的用户名
+          </p>
+        </div>
         <input
           v-model="registerUserInfo.email"
           placeholder="请输入邮箱地址"
           type="text"
         />
+        <div class="warning">
+          <p
+            v-if="
+              registerUserInfo.email.indexOf('@') == -1 &&
+              registerUserInfo.email.length > 0
+            "
+          >
+            请输入正确的邮箱地址
+          </p>
+        </div>
         <input
           v-model="registerUserInfo.password"
           placeholder="请输入密码"
           type="password"
         />
+        <div class="warning">
+          <p
+            v-if="
+              registerUserInfo.password.length < 6 &&
+              registerUserInfo.password.length > 0
+            "
+          >
+            请输入6位以上的密码
+          </p>
+        </div>
         <input
           v-model="registerUserInfo.repassword"
           placeholder="请重复密码"
           type="password"
         />
+        <div class="warning">
+          <p v-if="registerUserInfo.repassword != registerUserInfo.password">
+            密码不一致，请重新输入
+          </p>
+        </div>
         <button @click="register()">立即注册</button>
       </div>
       <div
@@ -65,15 +107,17 @@ export default {
   name: "Login",
   data() {
     return {
+      userpromptInfo: false,
+      pwdpromptInfo: false,
       loginUserInfo: {
         username: "",
         password: "",
       },
       registerUserInfo: {
-        username: "sill",
-        email: "l1679124358@gmail.com",
-        password: "123456",
-        repassword: "123456",
+        username: "",
+        email: "",
+        password: "",
+        repassword: "",
       },
       registerWindow: false,
     };
@@ -82,15 +126,25 @@ export default {
     async login() {
       try {
         let { username, password } = this.loginUserInfo;
-        let result = await this.$store.dispatch("loginAndRegister/login", {
-          username,
-          password,
-        });
-        this.$message({
-          showClose: true,
-          message: result,
-          type: "success",
-        });
+        if (!username) {
+          this.userpromptInfo = true;
+        } else this.userpromptInfo = false;
+        if (!password) {
+          this.pwdpromptInfo = true;
+        } else this.pwdpromptInfo = false;
+
+        if (this.userpromptInfo != true && this.pwdpromptInfo != true) {
+          let result = await this.$store.dispatch("loginAndRegister/login", {
+            username,
+            password,
+          });
+          this.$message({
+            showClose: true,
+            message: result,
+            type: "success",
+          });
+          this.$bus.$emit("loginClose");
+        }
       } catch (error) {
         this.$message({
           showClose: true,
@@ -101,20 +155,34 @@ export default {
     },
     async register() {
       try {
-        let { username, password, email } = this.registerUserInfo;
-        let result = await this.$store.dispatch("loginAndRegister/register", {
-          username,
-          password,
-          email,
-        });
-        this.$message({
-          showClose: true,
-          message: result,
-          type: "success",
-        });
-        setTimeout(() => {
-          this.registerWindow = !this.registerWindow;
-        }, 2000);
+        let { username, password, repassword, email } = this.registerUserInfo;
+        if (
+          username.length >= 4 &&
+          username.length <= 15 &&
+          password == repassword &&
+          password.length >= 6 &&
+          email.indexOf("@") != -1
+        ) {
+          let result = await this.$store.dispatch("loginAndRegister/register", {
+            username,
+            password,
+            email,
+          });
+          this.$message({
+            showClose: true,
+            message: result,
+            type: "success",
+          });
+          setTimeout(() => {
+            this.registerWindow = !this.registerWindow;
+          }, 2000);
+        } else {
+          this.$message({
+            showClose: true,
+            message: "请输入正确信息",
+            type: "warning",
+          });
+        }
       } catch (error) {
         this.$message({
           showClose: true,
@@ -217,6 +285,15 @@ export default {
 .input button:hover {
   scale: 1.1;
   background-color: rgb(198, 235, 222);
+}
+.input .warning {
+  width: 100%;
+  height: 4rem;
+  position: relative;
+}
+.input .warning p {
+  position: absolute;
+  color: red;
 }
 .other {
   width: 100%;

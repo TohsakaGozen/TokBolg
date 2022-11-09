@@ -40,6 +40,12 @@ let router = new VueRouter({
             meta: ["ARTICLE"],
             component: () => import("@/pages/article")
         },
+        {
+            path: '/comment',
+            name: 'comment',
+            meta: ["COMMENT"],
+            component: () => import("@/pages/comment")
+        },
 
         {   //默认路由(路由重定向)
             path: '/',

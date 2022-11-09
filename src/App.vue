@@ -47,11 +47,25 @@ export default {
       this.musicID = newmusicID;
       this.$refs.audio.play();
     },
+    async check() {
+      try {
+        let result = await this.$store.dispatch("loginAndRegister/checkToken");
+      } catch (error) {
+        this.$message({
+          showClose: true,
+          message: error + "请重新登录",
+          type: "warning",
+        });
+        this.$store.dispatch("loginAndRegister/exitLogin");
+      }
+    },
   },
   computed: {
     ...mapState("music", ["audioUrl"]),
   },
-  mounted() {},
+  created() {
+    this.check();
+  },
 };
 </script>
 
