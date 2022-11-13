@@ -23,6 +23,7 @@ const actions = {
 
 const mutations = {
     GETIMAGESLIST(state, result) {
+
         for (let i in result) {
             result[i] = require("../../" + result[i] + ".jpg")
         }

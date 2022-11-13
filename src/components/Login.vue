@@ -233,7 +233,7 @@ export default {
 }
 .boxContent {
   display: flex;
-  background-image: url(../../public/images/recordImages/A140C7DBB8B76D43058F8FCDB3DEC160.jpg);
+  background-image: url(../../public/images/loginImg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position-x: -6rem;

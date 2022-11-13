@@ -43,7 +43,7 @@
           </div>
           <div class="itemDate"></div>
           <div v-html="item.info" class="itemInfo"></div>
-          <img :src="articleImages[index]" alt="" />
+          <img :src="articleImages[index + i * 3]" alt="" />
         </article>
       </div>
       <div class="block">
