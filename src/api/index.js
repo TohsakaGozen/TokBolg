@@ -11,9 +11,16 @@ export const reqMusic = (id) => reqMusicApi({ url: `/song/url/v1?id=${id}&level=
 export const reqImages = () => request({ url: `/images`, method: 'get' })
 export const reqArticleImages = () => request({ url: `/articleImages`, method: 'get' })
 export const reqArticles = () => request({ url: `/article`, method: 'get' })
+export const reqUserComments = () => request({ url: `/getComments`, method: 'get' })
 export const upLoadArticle = (file) => request({
     url: `/upload`, data: file, method: 'post', headers: {
         'Content-Type': 'multipart/form-data',
+        'Authorization': `${store.state.loginAndRegister.token}`
+    }
+})
+export const upLoadComments = (data) => request({
+    url: `/comment`, method: 'post', data: data, headers: {
+        'Content-Type': 'application/json',
         'Authorization': `${store.state.loginAndRegister.token}`
     }
 })
@@ -34,3 +41,4 @@ export const reqLogin = (userInfo) => request({
 
 //gihubApi
 export const reqgithubRepos = (username) => reqDemo({ url: `/${username}/repos`, method: 'get' })
+

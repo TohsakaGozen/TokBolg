@@ -4,6 +4,7 @@ import music from './music'
 import image from './image'
 import article from './article'
 import demo from './demo'
+import comment from './comment'
 import loginAndRegister from './loginAndRegister'
 //需要使用插件一次
 Vue.use(Vuex)
@@ -15,6 +16,7 @@ export default new Vuex.Store({
         image,
         article,
         loginAndRegister,
-        demo
+        demo,
+        comment
     }
 })
