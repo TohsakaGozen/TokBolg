@@ -5,13 +5,15 @@
     <musicPlayer />
     <Sakana />
     <topImage />
-    <router-view
-      data-aos="fade-down"
-      data-aos-once="true"
-      data-aos-duration="2000"
-      class="routerContent"
-    >
-    </router-view>
+    <keep-alive include="home">
+      <router-view
+        data-aos="fade-down"
+        data-aos-once="true"
+        data-aos-duration="2000"
+        class="routerContent"
+      >
+      </router-view>
+    </keep-alive>
     <audio ref="audio" :src="audioUrl" @ended="nextMusic()"></audio>
   </div>
 </template>

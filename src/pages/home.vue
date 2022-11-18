@@ -27,13 +27,7 @@
           data-aos="fade-down"
           data-aos-once="true"
           data-aos-duration="3000"
-          @click="
-            $router.push({
-              name: 'article',
-              path: '/article',
-              params: { index, isSortUp },
-            })
-          "
+          @click="goArticle(index)"
         >
           <div class="itemTitle">
             {{ item.title }}
@@ -126,6 +120,15 @@ export default {
     ...mapState("article", ["showList", "articleList"]),
   },
   methods: {
+    goArticle(index) {
+      let isSortUp = this.isSortUp;
+      index = index + 3 * this.i;
+      this.$router.push({
+        name: "article",
+        path: "/article",
+        params: { index, isSortUp },
+      });
+    },
     handleCurrentChange(event) {
       this.i = event - 1;
     },

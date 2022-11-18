@@ -31,7 +31,6 @@ export const checkToken = () => request({
     }
 })
 
-
 export const reqRegister = (userInfo) => request({
     url: `/register`, data: userInfo, method: 'post', header: { 'Content-Type': 'application/json' }
 })
