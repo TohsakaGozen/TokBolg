@@ -71,3 +71,24 @@ for (let i in result) {
 }
 </style> 
 ```
+#### 5.md文件上传自动转为html格式后发送到前端进行页面展示
+```
+把md文件上传至后端后，后端通过读取该md文件，获取其文本，再通过marked模块将该文本转为html文件后存放在新的文件夹中，再读取html文件用splite()进行关键词分块，通过express框架将html块发送至前端进行渲染即可  
+关键代码(只展示md转为html部分代码):  
+const md2html = ({ theme, inputPath, outputPath }) => {
+    const themeStr = fs.readFileSync(`./html-component/${theme}.css`, 'utf-8')
+    const fileList = getFileList('./md')
+    for (let i = 0; i < fileList.length; i++) {
+        const item = fileList[i]
+        const templateHtml = fs.readFileSync('./html-component/index.html')
+        const htmlName = item.name.replace('.md', '')
+        const contextData = {
+            title: htmlName,
+            mdHtml: marked(fs.readFileSync(item.path, 'utf-8')),
+            css: themeStr
+        }
+        const compiledHtml = templateCompile(templateHtml, contextData)
+        fs.writeFileSync(`${outputPath}/${htmlName}.html`, compiledHtml)
+    }
+}
+```
