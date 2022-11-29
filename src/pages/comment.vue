@@ -21,20 +21,16 @@
       <button @click="uploadComment()">发送</button>
     </div>
     <div class="user" v-for="(user, index) in userComments" :key="index">
-      <div
-        v-for="(comments, index) in user.comment"
-        :key="index"
-        class="commentItem"
-      >
+      <div class="commentItem">
         <div class="userInfo">
           <div class="userImage">
             <img src="../../public/images/user.jpg" alt="" />
           </div>
           <div class="username">{{ user.username }}</div>
-          <div class="commentTime">{{ comments.time }}</div>
+          <div class="commentTime">{{ user.time }}</div>
         </div>
         <div class="userComment">
-          <p>{{ comments.text }}</p>
+          <p>{{ user.text }}</p>
         </div>
       </div>
     </div>
