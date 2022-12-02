@@ -97,11 +97,13 @@
         <h3 class="sectionTitle">NEARARTICLES</h3>
       </section> -->
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import carousel from "@/components/Carousel.vue";
+import Footer from "@/components/Footer.vue";
 import { mapState } from "vuex";
 export default {
   name: "home",
@@ -113,6 +115,7 @@ export default {
   },
   components: {
     carousel,
+    Footer,
   },
   computed: {
     ...mapState("music", ["homeMusicList", "audioUrl", "isPlay"]),
@@ -176,7 +179,7 @@ export default {
   margin-right: auto;
   margin-top: 2rem;
   width: 93%;
-  min-height: 90rem;
+  min-height: 150rem;
   display: flex;
   justify-content: space-around;
   padding: 2rem;
