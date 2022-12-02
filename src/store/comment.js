@@ -60,7 +60,6 @@ const mutations = {
                 return counttime2 - counttime1
             }
         }
-        console.log(userComments.sort(compare('time')))
         state.userComments = userComments.sort(compare('time'))
     }
 }
