@@ -22,7 +22,7 @@ export default {
   bottom: 0;
   width: 107%;
   height: 10vh;
-  background-color: rgb(191, 191, 191, 0.6);
+  background-color: rgb(191, 191, 191, 0.5);
   display: flex;
   flex-direction: column;
   justify-content: center;
