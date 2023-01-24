@@ -47,7 +47,7 @@ const mutations = {
                 day = value2[0]
                 hour = value3[0]
                 minute = value3[1]
-                counttime1 = parseInt(year) * 10000000 + parseInt(month) * 10000 + parseInt(day) * 1000 + parseInt(hour) * 10 + parseInt(minute)
+                counttime1 = parseInt(year) * 10000000 + parseInt(month) * 100000 + parseInt(day) * 10000 + parseInt(hour) * 100 + parseInt(minute)
                 value1 = b[time].split('-')
                 value2 = value1[2].split(' ')
                 value3 = value2[1].split(':')
@@ -56,7 +56,7 @@ const mutations = {
                 day = value2[0]
                 hour = value3[0]
                 minute = value3[1]
-                counttime2 = parseInt(year) * 10000000 + parseInt(month) * 10000 + parseInt(day) * 1000 + parseInt(hour) * 10 + parseInt(minute)
+                counttime2 = parseInt(year) * 10000000 + parseInt(month) * 100000 + parseInt(day) * 10000 + parseInt(hour) * 100 + parseInt(minute)
                 return counttime2 - counttime1
             }
         }
