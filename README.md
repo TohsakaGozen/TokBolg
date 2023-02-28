@@ -99,4 +99,4 @@ const md2html = ({ theme, inputPath, outputPath }) => {
 }
 ```
 
-#### 6.xxxxxx
+#### 6.xxxxx
